@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>webgl 学习</title>
+</head>
+<body>
+  <canvas id="canvas" width="500" height="500"></canvas>
+
+  <div>
+    <input type="range" step="1" min="0" max="500" oninput="change(this.value, 'x')" value="0">
+    <input type="range" step="1" min="0" max="500" oninput="change(this.value, 'y')" value="0">
+    <input type="range" step="1" min="0" max="500" oninput="change(this.value, 'z')" value="0">
+  </div>
+
+  <div>
+    <input type="range" step="1" min="-360" max="360" oninput="change(this.value, 'rx')" value="0">
+    <input type="range" step="1" min="-360" max="360" oninput="change(this.value, 'ry')" value="0">
+    <input type="range" step="1" min="-360" max="360" oninput="change(this.value, 'rz')" value="0">
+  </div>
+
+  <div>
+    <input type="range" step="1" min="-50" max="50" oninput="change(this.value, 'sx')" value="0">
+    <input type="range" step="1" min="-50" max="50" oninput="change(this.value, 'sy')" value="0">
+    <input type="range" step="1" min="-50" max="50" oninput="change(this.value, 'sz')" value="0">
+  </div>
+
+  <script src="./learn/index.js"></script>
+</body>
+</html>
