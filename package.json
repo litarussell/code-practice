@@ -44,8 +44,8 @@
     "mocha": "mocha mocha/test/*-test.js",
     "vue": "webpack --config ./vue/webpack.config.js",
     "vue-dev": "webpack-dev-server --config ./vue/webpack.config.js",
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development --display-modules --progress --colors --display-reasons"
+    "build": "webpack --config ./webpack-learn/webpack.config.js --mode production",
+    "dev": "webpack --config ./webpack-learn/webpack.config.js --mode development --display-modules --progress --colors --display-reasons"
   },
   "repository": {
     "type": "git",
