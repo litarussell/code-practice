@@ -23,9 +23,8 @@ const test = {
   }
 }
 
-new Vue({
-  el: '#app',
-  render: function (h) {
+export default Vue.extend({
+  render (h) {
     return (
       <div>
         <hello text="world!"  />

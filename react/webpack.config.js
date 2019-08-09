@@ -47,7 +47,7 @@ module.exports = {
   plugins: [
     new htmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: 'react/index.html',
       title: 'react demo!',
       inject: 'body',
       minify: {

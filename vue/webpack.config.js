@@ -55,7 +55,7 @@ module.exports = {
   plugins: [
     new htmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: 'vue/index.html',
       title: 'vue demo!',
       inject: 'body',
       minify: {
