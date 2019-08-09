@@ -27,13 +27,13 @@ export default class Lifecycle extends React.Component<AppProps, AppState> {
       </div>
     )
   }
-
+  // 默认返回`true`, 如果返回`false`则跳过更新; 首次渲染和调用`forceUpdate()`时不会调用该方法
   shouldComponentUpdate (nextProps: any, nextState: any): boolean {
     console.log('--shouldComponentUpdate--', nextProps, nextState)
     return true
   }
   // 在重渲染之前获取Dom快照, 可以在组件发生更改之前捕获到一些信息, 返回值作为componentDidUpdate()的参数
-  getSnapshotBeforeUpdate () {
+  getSnapshotBeforeUpdate (prevProps: AppProps, prevState: AppState) {
     console.log('--getSnapshotBeforeUpdate--')
     return 'test'
   }
@@ -48,6 +48,7 @@ export default class Lifecycle extends React.Component<AppProps, AppState> {
   componentWillUnmount (): void {
     console.log('--componentWillUnmount--')
   }
+  // 渲染过程、生命周期、子组件构造函数抛出错误
   componentDidCatch (error, info) {
     console.log('--componentDidCatch--', error, info)
   }
@@ -70,7 +71,3 @@ Lifecycle.getDerivedStateFromError = function (error: any): AppState {
   console.log('--static getDerivedStateFromError--', error)
   return { test: true }
 }
-
-// export {
-//   App
-// }
