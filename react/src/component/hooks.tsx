@@ -1,7 +1,10 @@
 import * as React from 'react'
 
-const { useState, useEffect, useReducer } = React
+const { useState, useEffect, useReducer, useContext, createContext } = React
 
+/**
+ * useReducer()
+ */
 const initState = { count: 0 }
 function reducer(state, action) {
   switch (action.type) {
@@ -22,7 +25,9 @@ function ReducerHooks (props) {
   )
 }
 
-// 自定义hook, 不同的组件使用相同的hook不会共享state, 其state和effect是相互隔离的
+/**
+ * 自定义hook, 不同的组件使用相同的hook不会共享state, 其state和effect是相互隔离的
+ */
 function useTestState () {
   const [Test, setTest] = useState(0)
   useEffect(() => {
@@ -33,6 +38,38 @@ function useTestState () {
   })
   return Test
 }
+
+/**
+ * 
+ */
+const AppContext = createContext('test')
+const A = () => {
+  const test = useContext(AppContext)
+  return (
+    <div>
+      <h1>A:</h1>
+      <p>{test}</p>
+    </div>
+  )
+}
+const B = () => {
+  const test = useContext(AppContext)
+  return (
+    <div>
+      <h1>B:</h1>
+      <p>{test}</p>
+    </div>
+  )
+}
+const ContextComponent = () => {
+  return (
+    <AppContext.Provider value={'testUseComtext'}>
+      <A />
+      <B />
+    </AppContext.Provider>
+  )
+}
+
 
 export function HooksTest () {
   const [count, setCount] = useState(0)
@@ -69,6 +106,7 @@ export function HooksTest () {
       <button onClick={() => setCount(count+1)}>count点击</button>
       <button onClick={() => { setTest(test<<1)} }>test点击</button>
       <ReducerHooks />
+      <ContextComponent />
     </div>
   )
 }
