@@ -6,10 +6,7 @@ function BasicExample() {
     <Router basename="/路由">
       <div>
         <ul>
-          <li><Link to={{
-            pathname: "/页面传参",
-            state: { test: "hello" }
-          }}>页面传参</Link></li>
+          <li><Link to={{ pathname: "/页面传参", state: { test: "hello" } }}>页面传参</Link></li>
           <li><Link to="/嵌套路由">嵌套路由</Link></li>
         </ul>
 
@@ -48,11 +45,7 @@ function Topics({ match }) {
       </ul>
 
       <Route path={`${match.path}/:topicId`} component={Topic} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a topic.</h3>}
-      />
+      <Route exact path={match.path} render={() => <h3>Please select a topic.</h3>} />
     </div>
   );
 }

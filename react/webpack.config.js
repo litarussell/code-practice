@@ -13,7 +13,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.tsx', '.ts', '.js', '.less' ]
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),

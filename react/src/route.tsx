@@ -6,7 +6,8 @@ import {
   route,
   redux,
   reactRedux,
-  HooksTest
+  HooksTest,
+  Calculator
 } from "./component"
 
 let props = {flag: false, test: false}
@@ -21,6 +22,7 @@ export default () => {
           <li><Link to="/redux">redux</Link></li>
           <li><Link to="/react-redux">react-redux</Link></li>
           <li><Link to="/hooks">hooks</Link></li>
+          <li><Link to="/calculator">Calculator</Link></li>
         </ul>
       </div>
       <div className="content">
@@ -38,6 +40,7 @@ export default () => {
           <Route path="/redux" component={redux} />
           <Route path="/react-redux" component={reactRedux} />
           <Route path="/hooks" component={HooksTest} />
+          <Route path="/calculator" component={Calculator} />
           <Route render={() => (<span>404</span>)} />
         </Switch>
       </div>
