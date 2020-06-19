@@ -48,7 +48,7 @@ export default class Calculator {
                 this.st.push(s1.pop())
               }
             } else if (p === '*' || p === '/' || p === '%') {
-              // 优先级较高的运算符 * / % ;弹栈直到栈顶元素优先级 >= 将要入栈的运算符优先级
+              // 优先级较高的运算符 * / % ;弹栈直到栈顶元素优先级 < 将要入栈的运算符优先级
               while (s1.length) {
                 this.st.push(s1.pop())
                 let p1 = s1[s1.length - 1]
