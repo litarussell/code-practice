@@ -2,6 +2,7 @@ const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: path.resolve(__dirname, './src/app.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -28,7 +29,7 @@ module.exports = {
   plugins: [
     new htmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: path.resolve(__dirname, 'index.html'),
       title: 'webpack demo!',
       inject: 'body',
       minify: {

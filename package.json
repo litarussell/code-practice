@@ -56,8 +56,8 @@
     "react-dev": "webpack-dev-server --config ./react/webpack.config.js",
     "pwa": "cd ./pwa && open http://localhost:8080 && http-server -c-1 -p 8080",
     "pwa-dev": "cd ./pwa && ngrok http 8080",
-    "build": "webpack --config ./webpack-learn/webpack.config.js --mode production",
-    "dev": "webpack --config ./webpack-learn/webpack.config.js --mode development --display-modules --progress --colors --display-reasons"
+    "build": "webpack --config ./webpack-learn/webpack.prod.js",
+    "dev": "webpack --config ./webpack-learn/webpack.dev.js --display-modules --progress --colors --display-reasons"
   },
   "repository": {
     "type": "git",
