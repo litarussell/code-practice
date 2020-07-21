@@ -80,9 +80,7 @@
     
     // 设置buffer
     function setupBuffer() {
-      var vertex = [
-        0, 0, 0
-      ];
+      var vertex = [ -0.5, 0.5, 1 ];
       var vertexBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.STATIC_DRAW);

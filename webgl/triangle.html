@@ -82,20 +82,34 @@
       var vertex = [
         -.5, -.2, 0,
         .5, -.2, 0,
-        0, .6, 0
+        0, .6, 0,
+        0, -.6, 0
       ]
       var vertexBuffer = gl.createBuffer()
       gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.STATIC_DRAW)
 
+      // let index = [
+      //   0, 1, 2,
+      //   0, 1, 3
+      // ]  // gl.TRIANGLES
+      // let index = [2, 0, 1, 3] // gl.TRIANGLE_STRIP
+      let index = [0, 2, 1, 3] // gl.TRIANGLE_FAN
+
+      var indexBuffer = gl.createBuffer()
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer)
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(index), gl.STATIC_DRAW)
+
       var aVertexPosition = gl.getAttribLocation(glProgram, 'aPos')
-      // point the attribute to the currently bound vertex buffer. 
       gl.vertexAttribPointer(aVertexPosition, 3, gl.FLOAT, false, 0, 0)
       gl.enableVertexAttribArray(aVertexPosition)
     }
 
     function draw() {
-      gl.drawArrays(gl.TRIANGLES, 0, 3)
+      // gl.drawArrays(gl.TRIANGLES, 0, 6)
+      // gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0)
+      // gl.drawElements(gl.TRIANGLE_STRIP, 4, gl.UNSIGNED_SHORT, 0)
+      gl.drawElements(gl.TRIANGLE_FAN, 4, gl.UNSIGNED_SHORT, 0)
     }
 
     window.onload = function () {
