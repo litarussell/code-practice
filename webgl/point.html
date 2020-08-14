@@ -5,9 +5,17 @@
   <meta charset="utf-8" />
   <title>Basic Draw Point</title>
   <script id="shader-vs" type="x-shader/x-vertex">
-    attribute vec3 aPos;
+    attribute vec2 aPos;
+    uniform vec2 u_resolution;
     void main(void){
-      gl_Position = vec4(aPos, 1);
+      // 从像素坐标转换到 0.0 到 1.0
+      vec2 zeroToOne = aPos / u_resolution;
+      // 再把 0->1 转换 0->2
+      vec2 zeroToTwo = zeroToOne * 2.0;
+      // 把 0->2 转换到 -1->+1 (裁剪空间)
+      vec2 clipSpace = zeroToTwo - 1.0;
+
+      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
       gl_PointSize = 20.0;
     }
   </script>
@@ -80,13 +88,16 @@
     
     // 设置buffer
     function setupBuffer() {
-      var vertex = [ -0.5, 0.5, 1 ];
+      var vertex = [ 200, 200 ];
       var vertexBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex), gl.STATIC_DRAW);
 
       var aVertexPosition = gl.getAttribLocation(glProgram, 'aPos');
-      gl.vertexAttribPointer(aVertexPosition, 3, gl.FLOAT, false, 0, 0);
+      var resolutionUniformLocation = gl.getUniformLocation(glProgram, "u_resolution");
+      gl.vertexAttribPointer(aVertexPosition, 2, gl.FLOAT, false, 0, 0);
+      // 设置全局变量 分辨率
+      gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
       gl.enableVertexAttribArray(aVertexPosition);
     }
 

@@ -140,7 +140,7 @@ if (gl) {
   let primitiveType = gl.TRIANGLES // 图元类型 三角形
   let count = 6                    // 顶点着色器运行3次
 
-  let translation = [100, 200]
+  let translation = [0, 0]
   let rotation = [Math.cos(0), Math.sin(0)]
   let scale = [1, 1]
   
