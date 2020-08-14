@@ -57,7 +57,10 @@
     "pwa": "cd ./pwa && open http://localhost:8080 && http-server -c-1 -p 8080",
     "pwa-dev": "cd ./pwa && ngrok http 8080",
     "build": "webpack --config ./webpack-learn/webpack.prod.js",
-    "dev": "webpack --config ./webpack-learn/webpack.dev.js --display-modules --progress --colors --display-reasons"
+    "dev": "webpack --config ./webpack-learn/webpack.dev.js --display-modules --progress --colors --display-reasons",
+
+    "vue-next-dev": "webpack-dev-server --config ./vue_next/webpack.dev.js",
+    "vue-next": "webpack --config ./vue_next/webpack.dev.js --display-modules --progress --colors --display-reasons"
   },
   "repository": {
     "type": "git",

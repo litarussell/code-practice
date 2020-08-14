@@ -1,0 +1,11 @@
+{
+  "name": "vue_next",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^3.0.0-rc.5"
+  }
+}
