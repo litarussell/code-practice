@@ -1,7 +1,7 @@
 // const assert = require('assert')
 const request = require('supertest')
 
-const { testKoa } = require('../app')
+const { testKoa } = require('../src/app')
 
 describe('#http.test.js', () => {
   let server = testKoa().listen(9900)

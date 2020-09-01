@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-const { sum } = require('../app')
+const { sum } = require('../src/app')
 
 describe('#simple.test.js', () => {
   describe('#sum()', () => {

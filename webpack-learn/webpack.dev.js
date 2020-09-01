@@ -23,6 +23,10 @@ module.exports = {
       {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader'
+      },
+      {
+        test: /\.txt$/,
+        loader: path.resolve(__dirname, './src/loader/txt.js')
       }
     ]
   },

@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-const { awaitFunc: test } = require('../app')
+const { awaitFunc: test } = require('../src/app')
 
 describe('#await.test.js', () => {
   describe('#awaitFunc()', () => {

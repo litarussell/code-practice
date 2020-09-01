@@ -30,9 +30,8 @@ exports.sum = function (...rest) {
 }
 
 exports.awaitFunc = async function () {
-  let expression = await readFile('mocha/data.txt')
+  let expression = await readFile('./test/src/data.txt')
   let fn = new Function('return ' + expression)
   let r = fn()
-  // console.log(`Calculate: ${expression} = ${r}`)
   return r
 }
