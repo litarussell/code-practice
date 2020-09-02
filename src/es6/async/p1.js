@@ -16,11 +16,13 @@ class myPromise {
       v.then.call(v, this._resolve.bind(this), this._reject.bind(this))
       return
     }
-    // setTimeout(() => {
-      this.value = v
-      this.state = FULFILLED
-      this.callbacks.length > 0 && this.callbacks.forEach(fn => fn.onResolve(v))
-    // })
+    this.value = v
+    this.state = FULFILLED
+    if (this.callbacks.length > 0) {
+      setTimeout(() => {
+        this.callbacks.forEach(fn => fn.onResolve(v))
+      })
+    }
   }
   _reject(err) { // 将状态置为REJECTED
     if (this.state != PENDING) return
@@ -61,10 +63,41 @@ class myPromise {
   catch(handleReject) {
     return this.then(null, handleReject)
   }
-  resolve() {}
-  reject() {}
-  all() {}
-  race() {}
+  resolve(v) {
+    return new myPromise((resolve, reject) => {
+      if (v && v.then && typeof v.then === "function") {
+        v.then(value => resolve(value), reason => reject(reason))
+      } else {
+        resolve(v)
+      }
+    })
+  }
+  reject(reason) {
+    return new myPromise((resolve, reject) => reject(reason))
+  }
+  all(promises) {
+    const values = new Array(promises.length)
+    let counts = 0
+    return new myPromise((resolve, reject) => {
+      promises.forEach((p, i) => {
+        myPromise.resolve(p).then(value => {
+          values[i] = value
+          counts++
+          if (counts == promises.length) resolve(values)
+        }, reason => reject(reason))
+      })
+    })
+  }
+  race(promises) {
+    return new myPromise((resolve, reject) => {
+      promises.forEach((p, i) => {
+        myPromise.resolve(p).then(
+          value => resolve(value),
+          reason => reject(reason)
+        )
+      })
+    })
+  }
 }
 
 module.exports = myPromise
