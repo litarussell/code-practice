@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "outDir": "./dist",
+    "jsx":"react",
+    "target": "es6",
+    "noImplicitThis": true,
+    "module": "commonjs",
+    "importHelpers": true
+  },
+  "include": ["./"],
+  "exclude": ["dist"]
+}

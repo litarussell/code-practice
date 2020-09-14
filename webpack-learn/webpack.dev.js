@@ -4,10 +4,27 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, './src/app.js'),
+  entry: path.resolve(__dirname, './src/app.ts'),
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'js/[name].js'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+		inline: true,
+		host: 'localhost',
+    compress: true,
+    historyApiFallback: true,
+		port: 8085,
+    open: true,
+    hot: true
+  },
+  resolve: {
+    alias: {
+      css: './css/',
+      components: './components/'
+    },
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [
@@ -20,16 +37,22 @@ module.exports = {
       {
         test: /\.css$/,
         // use: ['style-loader', 'css-loader']
-        use: [miniCssExtractPlugin.loader, 'css-loader']
+        use: [miniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+        // loader: 'style-loader!css-loader!less-loader'
+        use: [miniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       },
       {
         test: /\.txt$/,
         loader: path.resolve(__dirname, './src/loader/txt.js')
-      }
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: "ts-loader"
+      },
     ]
   },
   plugins: [
@@ -47,5 +70,6 @@ module.exports = {
         // collapseWhitespace: true
       }
     })
-  ]
+  ],
+  devtool: 'source-map'
 }
