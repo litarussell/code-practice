@@ -51,7 +51,9 @@ class myPromise {
         return
       }
       if (this.state == REJECTED) {
-        resolve(onReject(this.value))
+        // console.log(onReject)
+        if (onReject && typeof onReject == 'function')
+          resolve(onReject(this.value))
         return
       }
       this.callbacks.push({

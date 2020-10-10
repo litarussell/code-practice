@@ -45,19 +45,20 @@ class myPromise {
           resolve(result)
         }
       }
-
       if (this.state == FULFILLED) {
-        handle(onResolve)
-        return
+        process.nextTick(() => handle(onResolve))
       }
       if (this.state == REJECTED) {
-        resolve(onReject(this.value))
-        return
+        if (typeof onReject == 'function')
+          reject(onReject(this.value))
+        else
+          reject(this.value)
       }
-      this.callbacks.push({
-        onResolve() { handle(onResolve) },
-        onReject: () => resolve(onReject(this.value)),
-      })
+      if (this.state == PENDING)
+        this.callbacks.push({
+          onResolve() { handle(onResolve) },
+          onReject: () => resolve(onReject(this.value)),
+        })
     })
   }
   catch(handleReject) {
@@ -98,6 +99,7 @@ class myPromise {
       })
     })
   }
+  finally() {}
 }
 
 module.exports = myPromise

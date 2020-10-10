@@ -13,7 +13,9 @@ function mockAjax({ url, success = true, delay = 1000 }, callback) {
 // test(Promise)
 // test(myPromise)
 // test1(Promise)
-test1(myPromise)
+// test1(myPromise)
+test2(myPromise)
+// test2(Promise)
 
 function test(instance) {
   console.log('start')
@@ -83,4 +85,12 @@ function test1(instance) {
     console.log('step 2');
   })
   console.log('end');
+}
+
+function test2(instance) {
+  new instance(function(resolve, reject) {
+    reject('1')
+  })
+  .then(()=>{})
+  .catch(err => console.log('catch', err))
 }
