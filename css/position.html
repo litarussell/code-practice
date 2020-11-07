@@ -1,34 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            padding: 30px 0;
-            box-sizing: border-box;
-        }
-        .main {
-            padding-bottom: 2000px;
-        }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 30px;
-            background-color: red;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #app {
+      padding-bottom: 2000px;
+    }
+    #app p {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      margin: 10px 0;
+    }
+    #app div {
+      /* overflow: hidden; */
+      position: absolute;
+    }
+    #app p:nth-child(2) {
+      left: 10px;
+      /* right: 100px; */
+      /* bottom: 20px; */
+    }
+    #app-sticky {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0px;
+      /* color: blue !important; */
+    }
+    #app-sticky:hover {
+      color: blue;
+    }
+  </style>
 </head>
 <body>
-    <!-- <div class="wrap"> -->
-        <div class="main">
-            test
-        </div>
-        <div class="footer">
-            footer
-        </div>
-    <!-- </div> -->
+  <p>test</p>
+  <p>hello</p>
+  <p id="app-sticky" class="s app" style="color: red;">4</p>
+  <div id="app" class="app">
+    <p>1</p>
+    <p>2</p>
+    <div><p>3</p></div>
+    <p>5</p>
+  </div>
 </body>
 </html>

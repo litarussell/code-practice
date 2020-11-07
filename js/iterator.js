@@ -50,9 +50,18 @@ test.prototype[Symbol.iterator] = function () {
 
 let t = new test(10)
 
+let arr = {
+  1: 'a',
+  2: 'b',
+  length: 2
+}
+
+console.log(Array.from(arr))
+
 for (let i of t) {
   console.log(i)
 }
+
 
 // 
 // function Sets(arr) {
