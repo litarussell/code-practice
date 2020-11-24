@@ -24,12 +24,12 @@ const flat2 = function (arr) {
 // bind
 Function.prototype._bind = function (context, ...preargs) {
     let fn = this
-    const newfn = function(...args) {
+    const newfn = function (...args) {
         fn.apply(this instanceof newfn ? this : context, preargs.concat(args))
     }
     newfn.prototype = Object.create(this.prototype)
     return newfn
-  }
+}
 // call
 Function.prototype._call = function (context, ...args) {
     if (!context) context = window
@@ -50,8 +50,8 @@ Function.prototype._apply = function (context, args) {
 }
 
 // Object.create
-Object._create = function(obj) {
-    function f() {}
+Object._create = function (obj) {
+    function f() { }
     f.prototype = obj
     return new f()
 }
@@ -93,4 +93,22 @@ function throttle(fn, delay) {
             flag = true
         }, delay)
     }
+}
+
+// 设置cookie
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+// 获取cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
 }
