@@ -1,9 +1,6 @@
 // 数组去重
 const arr = [1, 1, 2, 3, 4, 5, 6, 3, 2]
 let s = new Set(arr)
-    (function () {
-        console.log(arguments)
-    })(1, 2, 3, 4)
 
 // 数组扁平化
 const flat1 = function (arr) {
@@ -19,6 +16,51 @@ const flat2 = function (arr) {
     return arr.reduce((pre, cur) => {
         return pre.concat(Array.isArray(cur) ? flat2(cur) : cur)
     }, [])
+}
+
+// 生成器函数自动执行
+function run(gen, ...args) {
+    let it = gen.apply(this, args);
+    return Promise.resolve()
+        .then(function handleNext(value) {
+            let next = it.next(value);
+            return (function handleResult(next) {
+                if (next.done) {
+                    return next.value
+                } else {
+                    return Promise.resolve(next.value)
+                        .then(handleNext, function handleErr(err) {
+                            return Promise.resolve(it.throw(err)).then(handleResult);
+                        });
+                }
+            })(next)
+        })
+}
+
+// 函数柯里化
+function curry(fn) {
+    if (fn.length < 1) fn
+    return function curried(...args) {
+        if (args.length < fn.length) {
+            return (...more) => {
+                return curried.apply(null, args.concat(more))
+            }
+        } else {
+            return () => fn.apply(null, args)
+        }
+    }
+}
+const curry1 = function (f) {
+    var len = f.length
+    return function curried(...args) {
+        if (args.length < len) {
+            return function (...more) {
+                return curried.apply(this, args.concat(more))
+            }
+        } else {
+            return f.apply(this, args)
+        }
+    }
 }
 
 // bind
@@ -49,6 +91,11 @@ Function.prototype._apply = function (context, args) {
     return ans
 }
 
+// object.setPrototypeOf
+Object._setPrototypeOf = function (a, b) {
+    a.__proto__ = b
+}
+
 // Object.create
 Object._create = function (obj) {
     function f() { }
@@ -60,7 +107,7 @@ function _instanceof(child, parent) {
     let o = parent.prototype
     let p = child.__proto__
     while (p) {
-        if (p == o) return true
+        if (p === o) return true
         p = p.__proto__
     }
     return false
@@ -78,7 +125,7 @@ function debounce(fn, delay) {
     return (...args) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
-            fn.apply(this, argss)
+            fn.apply(this, args)
         }, delay)
     }
 }
@@ -112,3 +159,55 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function getType(obj) {
+    switch (Object.prototype.toString.call(obj)) {
+        case '[object Object]':
+            return 'object'
+        case '[object Array]':
+            return 'array'
+        case '[object Date]':
+            return 'date'
+    }
+}
+
+function deepClone(obj, map = new WeakMap()) {
+    if (map.has(obj)) {
+        return map.get(obj)
+    }
+    let o = null, flag
+    // child = new RegExp(parent.source, getRegExp(parent));
+    // if (parent.lastIndex) child.lastIndex = parent.lastIndex;
+    // 对正则对象做特殊处理
+    switch (flag = getType(obj)) {
+        case 'array':
+        case 'object':
+            o = flag === 'array' ? [] : {}
+            map.set(obj, o)
+            for (let k in obj) {
+                if (obj.hasOwnProperty(k))
+                    o[k] = deepClone(obj[k], map)
+            }
+            break
+        case 'date':
+            o = new Date(obj.getTime())
+            map.set(obj, o)
+            break
+        default:
+            o = obj
+    }
+    return o
+}
+
+let obj = {
+    'a': 1,
+    'b': [1, [2]],
+    'c': function () { console.log('--') },
+    'd': /hello/g,
+    'e': new Date(),
+    'f': { name: 'test' },
+    'g': {}
+}
+obj.g.h = obj.f
+let o = deepClone(obj)
+console.log(o)
