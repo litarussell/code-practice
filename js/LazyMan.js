@@ -1,107 +1,60 @@
-(function(window, undefined){
-	var taskList = [];
+class _LazyMan {
+    constructor(name) {
+        this.taskQueue = [];
+        this.runTimer = null;
+        this.sayHi(name);
+    }
 
-	// 类
-	function LazyMan(){};
+    run() {
+        if (this.runTimer) {
+            clearTimeout(this.runTimer);
+        }
 
-	LazyMan.prototype.eat = function(str){
-		subscribe("eat", str);
-		return this;
-	};
+        this.runTimer = setTimeout(async () => {
+            for (let asyncFun of this.taskQueue) {
+                await asyncFun()
+            }
+            this.taskQueue.length = 0;
+            this.runTimer = null;
+        })
+        return this;
+    }
 
-	LazyMan.prototype.sleep = function(num){
-		subscribe("sleep", num);
-		return this;
-	};
+    sayHi(name) {
+        this.taskQueue.push(async () => console.log(`Hi, this is ${name}`));
+        return this.run();
+    }
 
-	LazyMan.prototype.sleepFirst = function(num){
-		subscribe("sleepFirst", num);
-		return this;
-	};
+    eat(food) {
+        this.taskQueue.push(async () => console.log(`Eat ${food}`));
+        return this.run();
+    }
 
-	// 订阅
-	function subscribe(){
-		var param = {},
-			args = Array.prototype.slice.call(arguments);
+    sleep(second) {
+        this.taskQueue.push(async () => {
+            console.log(`Sleep ${second} s`)
+            return this._timeout(second)
+        });
+        return this.run();
+    }
 
-		if(args.length < 1){
-			throw new Error("subscribe 参数不能为空!");
-		}
+    sleepFirst(second) {
+        this.taskQueue.unshift(async () => {
+            console.log(`Sleep first ${second} s`)
+            return this._timeout(second);
+        });
+        return this.run();
+    }
 
-		param.msg = args[0];
-		param.args = args.slice(1); // 函数的参数列表
+    async _timeout(second) {
+        await new Promise(resolve => {
+            setTimeout(resolve, second * 1e3);
+        })
+    }
+}
 
-		if(param.msg == "sleepFirst"){
-			taskList.unshift(param);
-		}else{
-			taskList.push(param);
-		}
-	}
+// 测试
+var lazyMan = name => new _LazyMan(name)
 
-	// 发布
-	function publish(){
-		if(taskList.length > 0){
-			run(taskList.shift());
-		}
-	}
-
-	// 鸭子叫
-	function run(option){
-		var msg = option.msg,
-			args = option.args;
-
-		switch(msg){
-			case "lazyMan": lazyMan.apply(null, args);break;
-			case "eat": eat.apply(null, args);break;
-			case "sleep": sleep.apply(null,args);break;
-			case "sleepFirst": sleepFirst.apply(null,args);break;
-			default:;
-		}
-	}
-
-	// 具体方法
-	function lazyMan(str){
-		lazyManLog("Hi!This is "+ str +"!");
-
-		publish();
-	}
-
-	function eat(str){
-		lazyManLog("Eat "+ str +"~");
-		publish();
-	}
-
-	function sleep(num){
-		setTimeout(function(){
-			lazyManLog("Wake up after "+ num);
-
-			publish();
-		}, num*1000);
-		
-	}
-
-	function sleepFirst(num){
-		setTimeout(function(){
-			lazyManLog("Wake up after "+ num);
-
-			publish();
-		}, num*1000);
-	}
-
-	// 输出文字
-	function lazyManLog(str){
-		console.log(str);
-	}
-
-	// 暴露接口
-	window.LazyMan = function(str){
-		subscribe("lazyMan", str);
-
-		setTimeout(function(){
-			publish();
-		}, 0);
-
-		return new LazyMan();
-	};
-
-})(window);
+// lazyMan('Hank');
+lazyMan('Hank').sleep(10).eat('dinner');

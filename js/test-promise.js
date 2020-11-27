@@ -1,5 +1,7 @@
 const myPromise = require('./promise.js')
-const p1 = require('es6-promise').Promise
+const p1 = require('./promise-polyfill-1.js')
+const p2 = require('./_promise.js')
+const p3 = require('es6-promise').Promise
 
 function mockAjax({
     url,
@@ -16,27 +18,27 @@ function mockAjax({
 }
 
 // test(Promise)
-// test(myPromise)
+// test(p2)
 // test1(Promise)
-// test1(myPromise)
-// test2(myPromise)
+// test1(p2)
 // test2(Promise)
-// test3(myPromise)
+// test2(p2)
 // test3(Promise)
-// test4(myPromise)
+// test3(p2)
 // test4(Promise)
-// test4(p1)
+// test4(p2)
+test4(p3)
 
 // test5()
 // test6()
-test7()
+// test7()
 
 function test(instance) {
     console.log('start')
     new instance((resolve, reject) => {
             // setTimeout(() => reject('1'), 1000)
-            // resolve(1)
-            reject('1')
+            resolve(1)
+            // reject('1')
             // console.log('promise1-1')
             // mockAjax({
             //   url: 'url-1',
@@ -68,7 +70,7 @@ function test(instance) {
             console.error('err1:', err)
             return err
         })
-        .catch(err => console.error('catch:', err))
+        // .catch(err => console.error('catch:', err))
     console.log('end')
 }
 
@@ -112,7 +114,7 @@ function test2(instance) {
             // return err
         })
         .then(v => console.log('v2:', v), err => console.log('err2', err))
-        .catch(err => console.log('catch', err))
+        // .catch(err => console.log('catch', err))
 }
 
 function test3(instance) {

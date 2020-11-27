@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/webgl-tutorials.css">
+    <style>
+        body {
+            margin: 0;
+        }
+        canvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+        #ui {
+            font-size: x-small;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        .tDnD_whileDrag {
+            background-color: #daf !important;
+        }
+        tr:nth-child(odd) {
+            background-color: #eee;
+        }
+        tr:nth-child(even) {
+            background-color: #def;
+        }
+        td {
+            border-width: 0px;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="uiContainer">
+        <div id="ui"></div>
+    </div>
+    <script src="./src/webgl-utils.js"></script>
+    <script src="./src/jquery-1.7.1.min.js"></script>
+    <script src="./src/jquery.tablednd_0_5.js"></script>
+    <script src="./app3.js"></script>
+</body>
+
+</html>

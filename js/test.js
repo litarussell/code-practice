@@ -1,3 +1,24 @@
+function curry(fn) {
+    if (fn.length < 1) fn
+    return function curried(...args) {
+        if (args.length < fn.length) {
+            return (...more) => {
+                return curried.apply(null, args.concat(more))
+            }
+        } else {
+            return () => fn.apply(null, args)
+        }
+    }
+}
+function test(a, b) {
+    console.log(a, b)
+}
+let fn = curry(test)
+fn('a')('b')
+
+
+
+
 // let p = new Promise((resolve, reject) => {
 //     console.log(1)
 //     resolve('a')
@@ -32,54 +53,54 @@
 //       console.log(1);
 //       setImmediate(function B(){console.log(2);});
 //     });
-  
+
 //     setTimeout(function timeout() {
 //       console.log('TIMEOUT FIRED');
 //     }, 0);
 // });
 
-Function.prototype._bind = function (context, ...preargs) {
-  let fn = this
-  const newfn = function(...args) {
-      fn.apply(this instanceof newfn ? this : context, preargs.concat(args))
-  }
-  // function o() {}
-  // o.prototype = this.prototype
-  // newfn.prototype = new o()
-  newfn.prototype = Object.create(this.prototype)
+// Function.prototype._bind = function (context, ...preargs) {
+//   let fn = this
+//   const newfn = function(...args) {
+//       fn.apply(this instanceof newfn ? this : context, preargs.concat(args))
+//   }
+//   // function o() {}
+//   // o.prototype = this.prototype
+//   // newfn.prototype = new o()
+//   newfn.prototype = Object.create(this.prototype)
 
-  return newfn
-}
-Function.prototype.bind2 = function (context) {
+//   return newfn
+// }
+// Function.prototype.bind2 = function (context) {
 
-  if (typeof this !== "function") {
-    throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
-  }
+//   if (typeof this !== "function") {
+//     throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
+//   }
 
-  var self = this;
-  var args = Array.prototype.slice.call(arguments, 1);
+//   var self = this;
+//   var args = Array.prototype.slice.call(arguments, 1);
 
-  var fNOP = function () {};
+//   var fNOP = function () {};
 
-  var fBound = function () {
-      var bindArgs = Array.prototype.slice.call(arguments);
-      return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
-  }
+//   var fBound = function () {
+//       var bindArgs = Array.prototype.slice.call(arguments);
+//       return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
+//   }
 
-  fNOP.prototype = this.prototype;
-  fBound.prototype = new fNOP();
-  return fBound;
-}
+//   fNOP.prototype = this.prototype;
+//   fBound.prototype = new fNOP();
+//   return fBound;
+// }
 
-function test() {
-  this.a = 1
-}
-test.prototype.show = function() {
-  console.log(this.a)
-}
-let obj2 = { a: 2 }
-let fn = test._bind(obj2)
+// function test() {
+//   this.a = 1
+// }
+// test.prototype.show = function() {
+//   console.log(this.a)
+// }
+// let obj2 = { a: 2 }
+// let fn = test._bind(obj2)
 
-let t = new fn()
-t.show()
-console.log(t)
+// let t = new fn()
+// t.show()
+// console.log(t)

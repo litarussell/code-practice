@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            color: #fff;
+        }
+        #test1 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            z-index: 100;
+            background-color: green;
+        }
+        #test2 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            z-index: 1000;
+            background-color: blue;
+            /* margin-top: -10px; */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="test1">test1</div>
+        <div id="test2">test2</div>
+    </div>
+    <script>
+        setTimeout(() => {
+            // document.querySelector("#test2").style.marginTop = "-10px"
+            document.querySelector("#test2").style.transform = "translate(0, -50px)"
+        }, 1000 * 2)
+    </script>
+</body>
+</html>

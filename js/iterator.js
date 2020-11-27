@@ -56,7 +56,7 @@ let arr = {
   length: 2
 }
 
-console.log(Array.from(arr))
+// console.log(Array.from(t))
 
 for (let i of t) {
   console.log(i)
