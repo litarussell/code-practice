@@ -76,6 +76,13 @@ class _Promise {
     catch(onRejected) {
         return this.then(null, onRejected)
     }
+    finally(callback) {
+        let P = this.constructor
+        return this.then(
+            value => P.resolve(callback()).then(() => value),
+            reason => P.resolve(callback()).then(() => { throw reason })
+        )
+    }
 }
 _Promise.resolve = value => new _Promise((resolve) => resolve(value))
 _Promise.reject = reason => new _Promise((_, reject) => reject(reason))
@@ -101,6 +108,5 @@ _Promise.race = (promises = []) => {
         })
     })
 }
-
 
 module.exports = _Promise
