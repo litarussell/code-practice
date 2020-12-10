@@ -75,7 +75,7 @@ Function.prototype._bind = function (context, ...preargs) {
 Function.prototype._softBind = function (context, ...preargs) {
     let fn = this
     const newfn = function (...args) {
-        fn.apply( (!this || this === (window || global)) ? context : this, preargs.concat(args))
+        fn.apply((!this || this === (window || global)) ? context : this, preargs.concat(args))
     }
     newfn.prototype = Object.create(this.prototype)
     return newfn
@@ -98,6 +98,19 @@ Function.prototype._apply = function (context, args) {
     delete context[fn]
     return ans
 }
+
+// Object.is
+Object._is = function (x, y) {
+    if (x === y) {
+        // +0 != -0
+        // 1 / (+0) = Infinity
+        // 1 / (-0) = -Infinity
+        return x !== 0 || 1 / x === 1 / y;
+    } else {
+        // NaN == NaN
+        return x !== x && y !== y;
+    }
+};
 
 // object.setPrototypeOf
 Object._setPrototypeOf = function (a, b) {
@@ -161,7 +174,7 @@ function debounce1(fn, delay, immediate = false) {
             }, delay)
         }
     }
-    
+
 }
 
 // 节流
