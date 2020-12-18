@@ -11,10 +11,14 @@ class _LazyMan {
         }
 
         this.runTimer = setTimeout(async () => {
-            for (let asyncFun of this.taskQueue) {
-                await asyncFun()
+            while (this.taskQueue.length > 0) {
+                let fn = this.taskQueue.shift()
+                await fn()
             }
-            this.taskQueue.length = 0;
+            // for (let asyncFun of this.taskQueue) {
+            //     await asyncFun()
+            // }
+            // this.taskQueue.length = 0;
             this.runTimer = null;
         })
         return this;

@@ -72,6 +72,14 @@ Function.prototype._bind = function (context, ...preargs) {
     newfn.prototype = Object.create(this.prototype)
     return newfn
 }
+Function.prototype._softBind = function (context, ...preargs) {
+    let fn = this
+    const newfn = function (...args) {
+        fn.apply((!this || this === (window || global)) ? context : this, preargs.concat(args))
+    }
+    newfn.prototype = Object.create(this.prototype)
+    return newfn
+}
 // call
 Function.prototype._call = function (context, ...args) {
     if (!context) context = window
@@ -90,6 +98,19 @@ Function.prototype._apply = function (context, args) {
     delete context[fn]
     return ans
 }
+
+// Object.is
+Object._is = function (x, y) {
+    if (x === y) {
+        // +0 != -0
+        // 1 / (+0) = Infinity
+        // 1 / (-0) = -Infinity
+        return x !== 0 || 1 / x === 1 / y;
+    } else {
+        // NaN == NaN
+        return x !== x && y !== y;
+    }
+};
 
 // object.setPrototypeOf
 Object._setPrototypeOf = function (a, b) {
@@ -129,6 +150,33 @@ function debounce(fn, delay) {
         }, delay)
     }
 }
+
+// [立即]执行
+function debounce1(fn, delay, immediate = false) {
+    let timer
+    if (immediate) {
+        let flag = true
+        return (...args) => {
+            if (immediate && flag) {
+                fn.apply(this, args)
+                flag = false
+            }
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                flag = true
+            }, delay)
+        }
+    } else {
+        return (...args) => {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                fn.apply(this, args)
+            }, delay)
+        }
+    }
+
+}
+
 // 节流
 function throttle(fn, delay) {
     let flag = true
@@ -139,6 +187,29 @@ function throttle(fn, delay) {
             fn.apply(this, args)
             flag = true
         }, delay)
+    }
+}
+// [立即]执行
+function throttle1(fn, delay, immediate = false) {
+    let flag = true
+    if (immediate) {
+        return (...args) => {
+            if (!flag) return
+            fn.apply(this, args)
+            flag = false
+            setTimeout(() => {
+                flag = true
+            }, delay)
+        }
+    } else {
+        return (...args) => {
+            if (!flag) return
+            flag = false
+            timer = setTimeout(() => {
+                fn.apply(this, args)
+                flag = true
+            }, delay)
+        }
     }
 }
 
