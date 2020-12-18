@@ -53,6 +53,7 @@ class _LazyMan {
     }
 }
 
+
 // 测试
 var lazyMan = name => new _LazyMan(name)
 

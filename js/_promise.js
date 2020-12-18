@@ -76,6 +76,13 @@ class _Promise {
     catch(onRejected) {
         return this.then(null, onRejected)
     }
+    finally(fn) {
+        let p = this.constructor
+        return this.then(
+            value => p.resolve(fn()).then(() => value),
+            reason => p.resolve(fn()).then(() => {throw reason})
+        )
+    }
 }
 _Promise.resolve = value => new _Promise((resolve) => resolve(value))
 _Promise.reject = reason => new _Promise((_, reject) => reject(reason))

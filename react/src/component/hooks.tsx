@@ -75,7 +75,7 @@ export function HooksTest () {
   const [count, setCount] = useState(0)
   const [test, setTest] = useState(1)
   const flag = useTestState()
-  // 相当于componentDidMount和componentDidUpgrade
+  // 相当于componentDidMount和componentDidUpdate
   // Effect在每次渲染的时候都会执行, 该函数会在组件销毁或后续渲染时重新执行
   // 第二个参数如果传入一个空数组[], effect仅会在组件挂载和卸载时执行
   useEffect(() => {
