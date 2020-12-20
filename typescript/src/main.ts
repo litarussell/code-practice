@@ -1,4 +1,4 @@
-import { foo } from "./module"
+import { foo, ProfileState } from "./module"
 
 export class Foo {
   constructor() {
@@ -18,3 +18,11 @@ namespace Utility {
 // usage
 Utility.log('Call me');
 Utility.error('maybe');
+
+let a: ProfileState = {
+  userName: "lita",
+  email: "email",
+  phone: "133"
+}
+
+console.log(a)
