@@ -1,5 +1,5 @@
 import * as React from "react"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Link, Switch, useRouteMatch } from "react-router-dom"
 
 function BasicExample() {
   return (
@@ -11,9 +11,10 @@ function BasicExample() {
         </ul>
 
         <hr />
-
-        <Route path="/页面传参" component={Home} />
-        <Route path="/嵌套路由" component={Topics} />
+        <Switch>
+          <Route path="/页面传参" component={Home} />
+          <Route path="/嵌套路由" component={Topics} />
+        </Switch>
       </div>
     </Router>
   );
@@ -28,7 +29,8 @@ function Home(props) {
   );
 }
 
-function Topics({ match }) {
+function Topics() {
+  const match = useRouteMatch();
   return (
     <div>
       <h2>Topics</h2>
