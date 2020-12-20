@@ -39,7 +39,7 @@ function run(gen, ...args) {
 
 // 函数柯里化
 function curry(fn) {
-    if (fn.length < 1) fn
+    if (fn.length < 1) return fn
     return function curried(...args) {
         if (args.length < fn.length) {
             return (...more) => {

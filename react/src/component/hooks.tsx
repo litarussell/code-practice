@@ -71,21 +71,21 @@ const ContextComponent = () => {
 }
 
 
-export function HooksTest() {
-    const [count, setCount] = useState(0)
-    const [test, setTest] = useState(1)
-    const flag = useTestState()
-    // 相当于componentDidMount和componentDidUpgrade
-    // Effect在每次渲染的时候都会执行, 该函数会在组件销毁或后续渲染时重新执行
-    // 第二个参数如果传入一个空数组[], effect仅会在组件挂载和卸载时执行
-    useEffect(() => {
-        document.title = `点击次数: ${count}!`
-        console.log('effect', count)
-        // 可返回一个函数, 做一些清除操作, 执行当前effect之前会对上一个effect进行清除
-        return () => {
-            console.log('清除', count)
-        }
-    }, [count])
+export function HooksTest () {
+  const [count, setCount] = useState(0)
+  const [test, setTest] = useState(1)
+  const flag = useTestState()
+  // 相当于componentDidMount和componentDidUpdate
+  // Effect在每次渲染的时候都会执行, 该函数会在组件销毁或后续渲染时重新执行
+  // 第二个参数如果传入一个空数组[], effect仅会在组件挂载和卸载时执行
+  useEffect(() => {
+    document.title = `点击次数: ${count}!`
+    console.log('effect', count)
+    // 可返回一个函数, 做一些清除操作, 执行当前effect之前会对上一个effect进行清除
+    return () => {
+      console.log('清除', count)
+    }
+  }, [count])
 
     useEffect(() => {
         console.log('test->', test)
