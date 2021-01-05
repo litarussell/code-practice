@@ -1,6 +1,5 @@
-import * as React from "react"
-import * as ReactDOM from "react-dom"
-import { extend } from "vue/types/umd";
+import React from "react"
+import ReactDOM from "react-dom"
 
 import './app.less'
 
