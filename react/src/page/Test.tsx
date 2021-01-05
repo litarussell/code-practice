@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, useRouteMatch } from "react-router-dom"
 
-const { useRef, useEffect, useState } = React;
+const { useRef, useEffect, useState, useCallback } = React;
 
 export default () => {
   return (
@@ -12,7 +12,7 @@ export default () => {
           <li><Link to="/Context测试">Context测试</Link></li>
           <li><Link to="/Render测试">Render测试</Link></li>
           <li><Link to="/Ref测试">Ref测试</Link></li>
-          <li><Link to="/Effect测试">Effect测试</Link></li>
+          <li><Link to="/useCallback测试">useCallback测试</Link></li>
         </ul>
 
         <hr />
@@ -21,7 +21,7 @@ export default () => {
           <Route path="/Context测试" component={TestContext} />
           <Route path="/Render测试" component={TestRender} />
           <Route path="/Ref测试" component={TestRef} />
-          <Route path="/Effect测试" component={TestEffect} />
+          <Route path="/useCallback测试" component={TestUseCallback} />
         </Switch>
       </div>
     </Router>
@@ -29,8 +29,9 @@ export default () => {
 }
 
 // 
-const TestEffect = () => {
-  return <div>TestEffect</div>
+const TestUseCallback = () => {
+  const fn = useCallback(async (v) => console.log('-->', v), []);
+  return <div onClick={() => fn('a')}>TestUseCallback</div>
 }
 
 // 
